@@ -1,6 +1,7 @@
 (ns passel.case
   (:require
-   [clojure.walk :as walk]))
+   [clojure.walk :as walk]
+   [camel-snake-kebab.core :as csk]))
 
 (defn- transform-keys [t coll]
   (let [f (fn [[k v]] [(t k) v])]
