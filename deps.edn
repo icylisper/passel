@@ -1,2 +1,4 @@
 {:deps
- {org.clojure/clojure {:mvn/version "1.10.3"}}}
+ {org.clojure/clojure                 {:mvn/version "1.10.3"}
+  camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"}
+  metosin/jsonista                    {:mvn/version "0.2.4"}}}
