@@ -1,0 +1,4 @@
+
+passel - A mixed bag of pure java-based clojure utils
+
+This is work in progress. Do not use yet.
