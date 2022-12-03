@@ -1,6 +1,7 @@
 (ns passel.db
   (:require
    [clojure.java.jdbc :as jdbc]
+   [passel.error :as error]
    [passel.case :as case]
    [passel.sql :as sql])
   (:import
@@ -37,9 +38,35 @@
   (jdbc/db-do-commands (pool)
                        (jdbc/drop-table-ddl tbl)))
 
+(defn drop-all-tables []
+  (jdbc/with-db-connection [conn (pool)]
+    (jdbc/query
+     conn
+     [(str "SELECT * FROM information_schema.tables "
+           "WHERE table_schema = 'PUBLIC'")]
+     :row-fn (fn [{:keys [table_name]}]
+               (println "DROP TABLE" table_name)
+               (jdbc/db-do-commands
+                conn
+                (str "DROP TABLE IF EXISTS " table_name " CASCADE"))))))
+
+(defn list-tables []
+  (->> (jdbc/query (pool)
+                   ["select * from pg_catalog.pg_tables"])
+       (filter #(= (:schemaname %) "public"))
+       (map :tablename)))
+
+(defn- schema-migrated? [tbl]
+  (error/ignore-errors
+   (-> (jdbc/query (pool)
+                   [(str "select count(*) from information_schema.tables "
+                         (format "where table_name='%s'" (name tbl)))])
+       first :count pos?)))
+
 (defn create! [tbl form]
-  (jdbc/db-do-commands (pool)
-                       (jdbc/create-table-ddl tbl form)))
+  (when-not (schema-migrated? tbl)
+    (jdbc/db-do-commands (pool)
+                         (jdbc/create-table-ddl tbl form))))
 
 (defn find1 [tbl where-clause]
   (first
