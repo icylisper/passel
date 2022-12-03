@@ -5,11 +5,13 @@
                  "-XX:TieredStopAtLevel=1"
                  "-XX:+UseSerialGC"
                  "-XX:CICompilerCount=1"
-                 "-server"]
+                 "-client"]
    :exec-fn     passel.test/run-selector
    :exec-args   {:selector :unit}
    :extra-paths ["src" "test"]}}
  :deps
  {org.clojure/clojure                 {:mvn/version "1.10.3"}
   camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"}
-  metosin/jsonista                    {:mvn/version "0.2.4"}}}
+  metosin/jsonista                    {:mvn/version "0.2.4"}
+  org.clojure/java.jdbc               {:mvn/version "0.7.12"}
+  com.mchange/c3p0                    {:mvn/version "0.9.5.2"}}}
