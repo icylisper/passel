@@ -9,7 +9,7 @@
       edn/read-string))
 
 (defn read-config [config-path]
-  (ignore-errors
+  (error/ignore-errors
    (slurp-edn config-path)))
 
 (defonce current (atom nil))
