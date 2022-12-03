@@ -10,3 +10,9 @@
 
 (defn write-json [thing]
   (json/write-value-as-string thing))
+
+(defn read-stream [is]
+  (let [m (error/ignore-errors
+           (-> (slurp is)
+               (read-json)))]
+    (when (map? m) m)))
