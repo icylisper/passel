@@ -1,10 +1,16 @@
 (ns passel.config
   (:require
-   [raven.util :as u]))
+   [clojure.edn :as edn]
+   [passel.error :as error]))
+
+(defn slurp-edn [path]
+  (-> path
+      slurp
+      edn/read-string))
 
 (defn read-config [config-path]
-  (u/ignore-errors
-   (u/slurp-edn config-path)))
+  (ignore-errors
+   (slurp-edn config-path)))
 
 (defonce current (atom nil))
 
