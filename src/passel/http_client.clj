@@ -1,4 +1,4 @@
-(ns passel.http.client
+(ns passel.http-client
   (:refer-clojure :exclude [send get])
   (:require
    [clojure.string :as str])
