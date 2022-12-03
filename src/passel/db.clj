@@ -24,7 +24,7 @@
   (jdbc/with-db-connection [conn (pool)]
     (jdbc/query conn qvec)))
 
-(defn- query [qmap]
+(defn query [qmap]
   (query* [(sql/sql qmap)]))
 
 (defn insert! [tbl qmap]
