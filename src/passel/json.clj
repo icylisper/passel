@@ -1,7 +1,8 @@
 (ns passel.json
   (:require
    [jsonista.core :as json]
-   [camel-snake-kebab.core :as csk]))
+   [camel-snake-kebab.core :as csk]
+   [passel.error :as error]))
 
 (defn read-json [str]
   (->> (json/object-mapper
