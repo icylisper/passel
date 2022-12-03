@@ -1,4 +1,20 @@
 
 passel - A mixed bag of pure java-based clojure utils
 
-This is work in progress. Do not use yet.
+* usage
+
+passel.log
+
+#+begin_src clojure
+(require [passel.log :as log])
+(log/init!)
+(log/info message)
+(log/debug message)
+#+end_src
+
+passel.config
+
+#+begin_src clojure
+(require [passel.config :as config])
+(config/init! "etc/config.edn")
+#+end_src
