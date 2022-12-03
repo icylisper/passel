@@ -8,7 +8,8 @@
    [passel.json :as json]
    [passel.error :as error]
    [passel.config :as config]
-   [passel.case :as case]))
+   [passel.case :as case]
+   [passel.db :as db]))
 
 (deftest ^:unit basic-test
   (is (= 2 2)))
