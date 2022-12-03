@@ -1,4 +1,15 @@
-{:deps
+{:aliases
+ {:test
+  {:jvm-opts    ["-XX:-OmitStackTraceInFastThrow"
+                 "-Xmx1024m"
+                 "-XX:TieredStopAtLevel=1"
+                 "-XX:+UseSerialGC"
+                 "-XX:CICompilerCount=1"
+                 "-server"]
+   :exec-fn     passel.test/run-selector
+   :exec-args   {:selector :unit}
+   :extra-paths ["src" "test"]}}
+ :deps
  {org.clojure/clojure                 {:mvn/version "1.10.3"}
   camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"}
   metosin/jsonista                    {:mvn/version "0.2.4"}}}

@@ -133,3 +133,7 @@
       (System/exit 1))
     (finally
       (shutdown-agents))))
+
+(defn run-selector [{:keys [selector]
+                     :or {selector :unit}}]
+  (run-test selector))
