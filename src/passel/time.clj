@@ -3,7 +3,7 @@
    [clojure.string :as str])
   (:import
    [java.sql Timestamp]
-   [java.time ZoneId Instant ZonedDateTime]
+   [java.time ZoneId Instant ZonedDateTime Duration]
    [java.time.format DateTimeFormatter]))
 
 (def formatters
@@ -73,3 +73,25 @@
   (let [fmt (make-formatter formatter)
         zdt (zoned-ms ms "UTC")]
     (format-zoned zdt fmt)))
+
+;; moments
+
+(defn time-ago [^Timestamp past-time zone-id]
+  (let [current  (zoned-ts (sql-timestamp) zone-id)
+        past     (zoned-ts past-time zone-id)
+        duration (Duration/between past current)
+        secs     (.getSeconds duration)
+        mins     (.toMinutes duration)
+        hrs      (.toHours duration)
+        days     (.toDays duration)]
+
+    (cond
+      (and (not (pos? days))
+           (not (pos? hrs)))
+      (format "%sm ago" mins)
+
+      (pos? days)
+      (format "%sd ago" days)
+
+      :else
+      (format "%sh ago" hrs))))
