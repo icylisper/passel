@@ -12,4 +12,6 @@
    [passel.db :as db]))
 
 (deftest ^:unit basic-test
+  (log/init!)
+  (log/info :testing)
   (is (= 2 2)))

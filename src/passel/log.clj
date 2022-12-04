@@ -41,8 +41,8 @@
 
 (defn printer [{:keys [preamble line column]} level ns & args]
   (apply println
-         (time/format-timestamp (System/currentTimeMillis)
-                                "yyyy-MM-dd HH:mm:ss")
+         (time/format-ms (System/currentTimeMillis)
+                         "yyyy-MM-dd HH:mm:ss")
          (str (-> level name str/upper-case)
               (when preamble
                 (str " " (serialize preamble))))
