@@ -11,6 +11,7 @@
    :extra-paths ["src" "test"]}}
  :deps
  {org.clojure/clojure                 {:mvn/version "1.10.3"}
+  org.clojure/core.cache              {:mvn/version "1.0.225"}
   camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"}
   metosin/jsonista                    {:mvn/version "0.2.4"}
   org.clojure/java.jdbc               {:mvn/version "0.7.12"}
