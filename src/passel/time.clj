@@ -74,11 +74,25 @@
         zdt (zoned-ms ms "UTC")]
     (format-zoned zdt fmt)))
 
+(defn zoned-time [time zone-id]
+  (cond
+    (instance? Long time)
+    (zoned-ms time zone-id)
+
+    (instance? Timestamp time)
+    (zoned-ts time zone-id)
+
+    (instance? String time)
+    (zoned-custom time zone-id)
+
+    :else
+    (zoned-custom time zone-id)))
+
 ;; moments
 
-(defn time-ago [^Timestamp past-time zone-id]
-  (let [current  (zoned-ts (sql-timestamp) zone-id)
-        past     (zoned-ts past-time zone-id)
+(defn time-ago [past-time zone-id]
+  (let [current  (zoned-time (sql-timestamp) zone-id)
+        past     (zoned-time past-time zone-id)
         duration (Duration/between past current)
         secs     (.getSeconds duration)
         mins     (.toMinutes duration)
