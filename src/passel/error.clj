@@ -102,3 +102,28 @@
   `assert!`"
   [thing & args]
   `(assert! (not (empty? ~thing)) ~@args))
+
+(defn catch-assertion-value
+  "Evaluate function `f` catching any ExceptionInfo conditions, and
+  apply `k-fn` on the exception's `ex-data`."
+  [f k-fn]
+  (try
+    (f)
+    (catch clojure.lang.ExceptionInfo ex
+      (k-fn (-> ex ex-data)))))
+
+(defmacro assertion-get
+  "Evaluate `body`, and apply `ifn` to any assertions that are thrown,
+  e.g.,
+
+  (do
+    (register-errors! {:bad-nil {:tag :bad-request}})
+    (= :bad-request (assertion-get :tag (assert! nil :bad-nil))))"
+  [ifn & body]
+  `(catch-assertion-value (fn [] ~@body) ~ifn))
+
+(defmacro assertion-message
+  "Evaluate `body`, and return assertion message of any assertions that may
+  be thrown."
+  [& body]
+  `(assertion-get :message ~@body))
