@@ -50,23 +50,10 @@
                 conn
                 (str "DROP TABLE IF EXISTS " table_name " CASCADE"))))))
 
-(defn list-tables []
-  (->> (jdbc/query (pool)
-                   ["select * from pg_catalog.pg_tables"])
-       (filter #(= (:schemaname %) "public"))
-       (map :tablename)))
-
-(defn- schema-migrated? [tbl]
-  (error/ignore-errors
-   (-> (jdbc/query (pool)
-                   [(str "select count(*) from information_schema.tables "
-                         (format "where table_name='%s'" (name tbl)))])
-       first :count pos?)))
-
 (defn create! [tbl form]
-  (when-not (schema-migrated? tbl)
-    (jdbc/db-do-commands (pool)
-                         (jdbc/create-table-ddl tbl form))))
+  (jdbc/db-do-commands
+   (pool)
+   (jdbc/create-table-ddl tbl form {:conditional? true})))
 
 (defn find1 [tbl where-clause]
   (first
