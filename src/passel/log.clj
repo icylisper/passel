@@ -113,9 +113,10 @@
       (log* ~(meta &form) ~level '~v v#)
       v#)))
 
-
 (defn init! []
   (System/setProperties
   (doto (java.util.Properties. (System/getProperties))
     (.put "com.mchange.v2.log.MLog" "com.mchange.v2.log.FallbackMLog")
-    (.put "com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL" "OFF"))))
+    (.put "com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL" "OFF")
+    (.put "oejs.Server" "OFF")
+    (.put "oejs.AbstractConnector" "OFF"))))
