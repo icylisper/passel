@@ -15,5 +15,5 @@
 (defn read-stream [is]
   (let [m (error/ignore-errors
            (-> (slurp is)
-               (read-json)))]
+               (read-str)))]
     (when (map? m) m)))
