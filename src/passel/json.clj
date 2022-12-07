@@ -4,12 +4,12 @@
    [camel-snake-kebab.core :as csk]
    [passel.error :as error]))
 
-(defn read-json [str]
+(defn read-str [str]
   (->> (json/object-mapper
         {:decode-key-fn csk/->kebab-case-keyword})
        (json/read-value str)))
 
-(defn write-json [thing]
+(defn write-str [thing]
   (json/write-value-as-string thing))
 
 (defn read-stream [is]
