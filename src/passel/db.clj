@@ -21,7 +21,7 @@
                (.setMaxIdleTime (* 3 60 60)))]
     {:datasource cpds}))
 
-(defn- query* [qvec]
+(defn query* [qvec]
   (jdbc/with-db-connection [conn (pool)]
     (jdbc/query conn qvec)))
 
